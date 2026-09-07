@@ -21,11 +21,14 @@
   <meta name="twitter:title" content="PKR666 Pakistan Casino Lobby" />
   <meta name="twitter:description" content="JazzCash &amp; Easypaisa context ke sath slots aur live games. 21+." />
   <meta name="twitter:image" id="seo-twitter-image" content="" />
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="images/logo.png" />
   <script>
     (function () {
       var o = location.origin + location.pathname.replace(/\/?$/, "/");
       var page = o.replace(/\/$/, "") || location.href.split("#")[0];
       var img = o + "images/night.jpg";
+      var logo = o + "images/logo.png";
       var c = document.getElementById("seo-canonical");
       var u = document.getElementById("seo-og-url");
       var i = document.getElementById("seo-og-image");
@@ -34,17 +37,76 @@
       if (u) u.content = page;
       if (i) i.content = img;
       if (t) t.content = img;
+      window.__PKR666_ORIGIN__ = o;
+      window.__PKR666_LOGO__ = logo;
+      window.__PKR666_PAGE__ = page;
     })();
   </script>
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="pkr666-schema">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "PKR666",
-    "alternateName": ["pkr666", "PKR 666"],
-    "description": "PKR666 Pakistan mobile-first gaming hub with local payment context for JazzCash, Easypaisa, SadaPay and Raast.",
-    "inLanguage": "ur-PK"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "#organization",
+        "name": "PKR666",
+        "alternateName": ["pkr666", "PKR 666"],
+        "url": "https://hh98.work/?id=310881202",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "images/logo.png",
+          "width": 512,
+          "height": 512,
+          "caption": "PKR666 logo"
+        },
+        "image": "images/logo.png",
+        "description": "PKR666 Pakistan mobile-first gaming hub with local payment context for JazzCash, Easypaisa, SadaPay and Raast.",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Pakistan"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "#website",
+        "name": "PKR666",
+        "alternateName": ["pkr666", "PKR 666"],
+        "url": "https://hh98.work/?id=310881202",
+        "description": "PKR666 Pakistan mobile-first gaming hub with local payment context for JazzCash, Easypaisa, SadaPay and Raast.",
+        "inLanguage": "ur-PK",
+        "publisher": { "@id": "#organization" },
+        "potentialAction": {
+          "@type": "RegisterAction",
+          "target": "https://hh98.work/?id=310881202",
+          "name": "Account kholo"
+        }
+      }
+    ]
   }
+  </script>
+  <script>
+    // Absolute logo URLs for schema (required by Google)
+    document.addEventListener("DOMContentLoaded", function () {
+      try {
+        var el = document.getElementById("pkr666-schema");
+        if (!el || !window.__PKR666_LOGO__) return;
+        var data = JSON.parse(el.textContent);
+        var origin = window.__PKR666_ORIGIN__ || "";
+        var page = window.__PKR666_PAGE__ || origin;
+        var logoUrl = window.__PKR666_LOGO__;
+        data["@graph"].forEach(function (node) {
+          if (node["@type"] === "Organization") {
+            if (node.logo && node.logo.url && node.logo.url.indexOf("http") !== 0) {
+              node.logo.url = logoUrl;
+            }
+            if (node.image && node.image.indexOf("http") !== 0) node.image = logoUrl;
+            if (page) node.url = page;
+          }
+          if (node["@type"] === "WebSite" && page) node.url = page;
+        });
+        el.textContent = JSON.stringify(data);
+      } catch (e) {}
+    });
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -98,10 +160,38 @@
       gap: 1rem; padding: 0.85rem 0;
     }
     .logo {
-      font-family: var(--display); font-weight: 700; font-size: 1.35rem;
-      letter-spacing: -0.03em; color: var(--cyan);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+      color: var(--cyan);
+    }
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .logo-mark {
+      height: 36px;
+      width: auto;
+      display: block;
     }
     .logo span { color: var(--gold); }
+    .logo-text { line-height: 1; }
+    .logo-text small {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 0.15rem;
+    }
     .nav-links { display: flex; gap: 1.1rem; font-size: 0.9rem; color: var(--muted); font-weight: 500; }
     .nav-links a:hover { color: var(--cyan); }
     .nav-cta { display: flex; gap: 0.5rem; }
@@ -375,7 +465,10 @@
 
   <header>
     <div class="wrap nav">
-      <a class="logo" href="#">PKR<span>666</span></a>
+      <a class="logo" href="#" aria-label="PKR666 home">
+        <img src="images/logo.png" width="40" height="40" alt="PKR666 logo" />
+        <span class="logo-text">PKR<span>666</span><small>Pakistan lobby</small></span>
+      </a>
       <nav class="nav-links">
         <a href="#rails">Adaigi</a>
         <a href="#rooms">Lobby</a>
@@ -796,7 +889,10 @@
   <footer>
     <div class="wrap">
       <div class="footer-top">
-        <div class="logo">PKR<span>666</span></div>
+        <div class="logo" aria-label="PKR666">
+          <img src="images/logo.png" width="40" height="40" alt="PKR666 logo" />
+          <span class="logo-text">PKR<span>666</span></span>
+        </div>
         <div class="footer-links">
           <a data-link="lobby" href="#">Lobby</a>
           <a data-link="register" href="#">Account</a>
